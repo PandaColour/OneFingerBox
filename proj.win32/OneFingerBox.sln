@@ -5,7 +5,6 @@ VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OneFingerBox", "OneFingerBox.vcxproj", "{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
 	ProjectSection(ProjectDependencies) = postProject
-		{EB7E5610-C178-49C9-8B4C-1C283E616ED9} = {EB7E5610-C178-49C9-8B4C-1C283E616ED9}
 		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E} = {98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}
 	EndProjectSection
 EndProject
@@ -15,7 +14,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos2d\coco
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "librecast", "..\cocos2d\external\recast\proj.win32\librecast.vcxproj", "{41E34993-647E-4282-8384-4AB1AE31A452}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libBox2D", "..\..\..\..\cocos\OneFingerBox\build\jsb-default\frameworks\cocos2d-x\external\sources\Box2D\proj.win32\libBox2D.vcxproj", "{EB7E5610-C178-49C9-8B4C-1C283E616ED9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libBox2D", "..\cocos2d\external\sources\Box2D\proj.win32\libBox2D.vcxproj", "{EB7E5610-C178-49C9-8B4C-1C283E616ED9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +47,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {630F37FF-F89F-4C32-8B4F-BF7162B495F3}
+		SolutionGuid = {B6B68693-684E-405C-B713-80A645448AE1}
 	EndGlobalSection
 EndGlobal

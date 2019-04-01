@@ -18,6 +18,9 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\AddBoxProp.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -141,6 +144,9 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AddBoxProp.h">
@@ -268,6 +274,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
     <Media Include="..\Resources\backmusic.mp3">
       <Filter>resource</Filter>
     </Media>
@@ -330,12 +341,6 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="..\Resources\Marker Felt.ttf">
-      <Filter>resource</Filter>
-    </Font>
-    <Font Include="..\Resources\fonts\arial.ttf">
-      <Filter>resource</Filter>
-    </Font>
-    <Font Include="..\Resources\fonts\Marker Felt.ttf">
       <Filter>resource</Filter>
     </Font>
   </ItemGroup>
