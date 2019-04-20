@@ -1,7 +1,0 @@
-/Android.mk
-/CMakeLists.txt
-/ExtensionDeprecated.cpp
-/ExtensionDeprecated.h
-/ExtensionExport.h
-/ExtensionMacros.h
-/cocos-ext.h

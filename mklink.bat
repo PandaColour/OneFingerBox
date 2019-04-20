@@ -1,0 +1,1 @@
+mklink /j .\cocos2d C:\CocosCreator\resources\cocos2d-x
