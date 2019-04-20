@@ -1,0 +1,5 @@
+/before-install.sh
+/config.gitingore
+/for-each-file-in-dir.sh
+/generate-template-files.py
+/run-script.sh

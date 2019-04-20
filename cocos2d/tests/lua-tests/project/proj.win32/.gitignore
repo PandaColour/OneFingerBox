@@ -1,0 +1,7 @@
+/build-cfg.json
+/lua-tests.rc
+/lua-tests.win32.vcxproj
+/lua-tests.win32.vcxproj.filters
+/main.cpp
+/main.h
+/resource.h

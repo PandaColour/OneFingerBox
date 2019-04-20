@@ -1,0 +1,16 @@
+/Android.mk
+/CCApplication-android.cpp
+/CCApplication-android.h
+/CCCommon-android.cpp
+/CCDevice-android.cpp
+/CCEnhanceAPI-android.cpp
+/CCEnhanceAPI-android.h
+/CCFileUtils-android.cpp
+/CCFileUtils-android.h
+/CCGL-android.h
+/CCGLViewImpl-android.cpp
+/CCGLViewImpl-android.h
+/CCPlatformDefine-android.h
+/CCStdC-android.h
+/CMakeLists.txt
+/javaactivity-android.cpp

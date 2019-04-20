@@ -1,0 +1,14 @@
+/autotest.py
+/cocos-2dx-develop-android.py
+/cocos-2dx-develop-base-repo.py
+/cocos-2dx-develop-ios.py
+/cocos-2dx-develop-win32.py
+/cocos-2dx-doxygen.py
+/cocos-2dx-pull-request-build-comment-trigger.py
+/cocos-2dx-pull-request-build-trigger.py
+/cocos-2dx-pull-request-build.py
+/cocos2d-console-test.py
+/cocostudiox-base-repo.py
+/cocostudiox-daily-build.py
+/jenkins-job-watchdog.py
+/manual-update-jenkins-scripts.py

@@ -1,0 +1,24 @@
+/build all tests Mac.xcscheme
+/build all tests iOS.xcscheme
+/build all tests tvOS.xcscheme
+/cpp-empty-test Mac.xcscheme
+/cpp-empty-test iOS.xcscheme
+/cpp-tests Mac.xcscheme
+/cpp-tests iOS.xcscheme
+/cpp-tests tvOS.xcscheme
+/game-controller-test IOS.xcscheme
+/game-controller-test Mac.xcscheme
+/game-controller-test tvOS.xcscheme
+/js-memory-gc-tests Mac.xcscheme
+/js-memory-gc-tests iOS.xcscheme
+/js-tests Mac.xcscheme
+/js-tests iOS.xcscheme
+/js-tests tvOS.xcscheme
+/lua-empty-test Mac.xcscheme
+/lua-empty-test iOS.xcscheme
+/lua-game-controller-test iOS.xcscheme
+/lua-tests Mac.xcscheme
+/lua-tests iOS.xcscheme
+/lua-tests tvOS.xcscheme
+/perf test 3.11 Mac.xcscheme
+/perf test 3.11 iOS.xcscheme

@@ -45,7 +45,7 @@ USING_NS_CC;
 static cocos2d::Size designResolutionSize = cocos2d::Size(640, 960);
 static cocos2d::Size smallResolutionSize = cocos2d::Size(320, 480);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(640, 960);
-static cocos2d::Size largeResolutionSize = cocos2d::Size(1536, 2048);
+static cocos2d::Size largeResolutionSize = cocos2d::Size(640, 960); //cocos2d::Size(960, 1440);
 
 AppDelegate::AppDelegate()
 {
@@ -65,7 +65,7 @@ AppDelegate::~AppDelegate()
 void AppDelegate::initGLContextAttrs()
 {
     // set OpenGL context attributes: red,green,blue,alpha,depth,stencil,multisamplesCount
-    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8, 0};
 
     GLView::setGLContextAttrs(glContextAttrs);
 }

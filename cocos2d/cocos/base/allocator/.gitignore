@@ -1,0 +1,12 @@
+/CCAllocatorBase.h
+/CCAllocatorDiagnostics.cpp
+/CCAllocatorDiagnostics.h
+/CCAllocatorGlobal.cpp
+/CCAllocatorGlobal.h
+/CCAllocatorGlobalNewDelete.cpp
+/CCAllocatorMacros.h
+/CCAllocatorMutex.h
+/CCAllocatorStrategyDefault.h
+/CCAllocatorStrategyFixedBlock.h
+/CCAllocatorStrategyGlobalSmallBlock.h
+/CCAllocatorStrategyPool.h

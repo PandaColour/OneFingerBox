@@ -1,0 +1,7 @@
+/plugin_clean.py
+/plugin_deploy.py
+/plugin_dist.py
+/plugin_gui.py
+/plugin_test.py
+/plugin_update.py
+/plugin_version.py

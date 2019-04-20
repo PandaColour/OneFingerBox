@@ -1,0 +1,10 @@
+/appendix.mk
+/basedef.mk
+/build_c.mk
+/build_edc.mk
+/build_po.mk
+/flags.mk
+/funcs.mk
+/makefile.mk
+/platform.mk
+/tooldef.mk
