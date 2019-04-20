@@ -48,12 +48,90 @@ endif()
 
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
+     Classes/AddBoxProp.cpp
      Classes/AppDelegate.cpp
-     Classes/HelloWorldScene.cpp
+     Classes/AStar.cpp
+     Classes/Audio.cpp
+     Classes/Barrier.cpp
+     Classes/BigTree.cpp
+     Classes/Blood.cpp
+     Classes/Bomb.cpp
+     Classes/BottomFrame.cpp
+     Classes/Box.cpp
+     Classes/BugMonster.cpp
+     Classes/BugTestMonster.cpp
+     Classes/Cherry.cpp
+     Classes/CountryLayer.cpp
+     Classes/Cross.cpp
+     Classes/DataStream.cpp
+     Classes/FloatScore.cpp
+     Classes/Flower.cpp
+     Classes/GameApp.cpp
+     Classes/GameScene.cpp
+     Classes/GuidLayer.cpp
+     Classes/Hander.cpp
+     Classes/Hero.cpp
+     Classes/LevelButton.cpp
+     Classes/LevelScene.cpp
+     Classes/lv.cpp
+     Classes/MainScene.cpp
+     Classes/Monster.cpp
+     Classes/PurpleMonster.cpp
+     Classes/Redheart.cpp
+     Classes/RedMonster.cpp
+     Classes/ResultLayer.cpp
+     Classes/roadStar.cpp
+     Classes/score.cpp
+     Classes/ScoreLayer.cpp
+     Classes/SettingScene.cpp
+     Classes/Shoes.cpp
+     Classes/SmallTree.cpp
+     Classes/Stone.cpp
+     Classes/ZoneLayer.cpp
      )
 list(APPEND GAME_HEADER
+     Classes/AddBoxProp.h
      Classes/AppDelegate.h
-     Classes/HelloWorldScene.h
+     Classes/AStar.h
+     Classes/Audio.h
+     Classes/Barrier.h
+     Classes/BigTree.h
+     Classes/Blood.h
+     Classes/Bomb.h
+     Classes/BottomFrame.h
+     Classes/Box.h
+     Classes/BugMonster.h
+     Classes/BugTestMonster.h
+     Classes/Cherry.h
+     Classes/CountryLayer.h
+     Classes/Cross.h
+     Classes/DataStream.h
+     Classes/FloatScore.h
+     Classes/Flower.h
+     Classes/GameApp.h
+     Classes/GameScene.h
+     Classes/GuidLayer.h
+     Classes/Hander.h
+     Classes/Hero.h
+     Classes/LevelButton.h
+     Classes/LevelScene.h
+     Classes/lv.h
+     Classes/MainScene.h
+     Classes/Monster.h
+     Classes/PurpleMonster.h
+     Classes/Redheart.h
+     Classes/RedMonster.h
+     Classes/ResultLayer.h
+     Classes/roadStar.h
+     Classes/score.h
+     Classes/ScoreLayer.h
+     Classes/SettingScene.h
+     Classes/Shoes.h
+     Classes/SmallTree.h
+     Classes/Stone.h
+     Classes/TBase.h
+     Classes/tdaf.h
+     Classes/ZoneLayer.h
      )
 
 if(ANDROID)

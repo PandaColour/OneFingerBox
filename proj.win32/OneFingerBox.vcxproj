@@ -245,35 +245,32 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\Resources\backmusic.mp3" />
-    <Media Include="..\Resources\blood.mp3" />
-    <Media Include="..\Resources\boom.wav" />
-    <Media Include="..\Resources\box.wav" />
-    <Media Include="..\Resources\hit.mp3" />
-    <Media Include="..\Resources\hurt.wav" />
-    <Media Include="..\Resources\kill.wav" />
-    <Media Include="..\Resources\lose.mp3" />
-    <Media Include="..\Resources\push.mp3" />
-    <Media Include="..\Resources\readygo.mp3" />
-    <Media Include="..\Resources\win.mp3" />
-    <Media Include="..\Resources\yahoo.wav" />
+    <Media Include="..\Resources\res\backmusic.mp3" />
+    <Media Include="..\Resources\res\blood.mp3" />
+    <Media Include="..\Resources\res\boom.wav" />
+    <Media Include="..\Resources\res\box.wav" />
+    <Media Include="..\Resources\res\hit.mp3" />
+    <Media Include="..\Resources\res\hurt.wav" />
+    <Media Include="..\Resources\res\kill.wav" />
+    <Media Include="..\Resources\res\lose.mp3" />
+    <Media Include="..\Resources\res\push.mp3" />
+    <Media Include="..\Resources\res\readygo.mp3" />
+    <Media Include="..\Resources\res\win.mp3" />
+    <Media Include="..\Resources\res\yahoo.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\CloseNormal.png" />
-    <Image Include="..\Resources\CloseSelected.png" />
-    <Image Include="..\Resources\game_background.png" />
-    <Image Include="..\Resources\HelloWorld.png" />
-    <Image Include="..\Resources\main_background.png" />
-    <Image Include="..\Resources\OneFingerBox0.png" />
-    <Image Include="..\Resources\OneFingerBox1.png" />
+    <Image Include="..\Resources\res\game_background.png" />
+    <Image Include="..\Resources\res\main_background.png" />
+    <Image Include="..\Resources\res\OneFingerBox0.png" />
+    <Image Include="..\Resources\res\OneFingerBox1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="..\Resources\Marker Felt.ttf" />
+    <Font Include="..\Resources\res\Marker Felt.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\Resources\ofboxxml.xml" />
-    <Xml Include="..\Resources\OneFingerBox0.xml" />
-    <Xml Include="..\Resources\OneFingerBox1.xml" />
+    <Xml Include="..\Resources\res\ofboxxml.xml" />
+    <Xml Include="..\Resources\res\OneFingerBox0.xml" />
+    <Xml Include="..\Resources\res\OneFingerBox1.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

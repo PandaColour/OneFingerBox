@@ -157,18 +157,18 @@ void Chero::turnLeft()
 {
     stopAction(m_PlayAnimate);
     
-    Animation* standby = Animation::create();
     initParam param =CGameApp::GetInstance()->ParseFileParam("hero_pushhorizontal.png");
     SpriteFrame* hero_pushdown = SpriteFrame::create(param.file, param.rect);
-    standby->addSpriteFrame(hero_pushdown);
     
     param =CGameApp::GetInstance()->ParseFileParam("hero_standby.png");
     SpriteFrame* hero_down = SpriteFrame::create(param.file, param.rect);
-    standby->addSpriteFrame(hero_down);
-    standby->setDelayPerUnit(0.1f);
-    standby->setRestoreOriginalFrame(true);
-    Animate* LeftAnimate = Animate::create(standby);
-    m_PlayAnimate = RepeatForever::create(Sequence::create(LeftAnimate, LeftAnimate->reverse(), NULL));
+
+	Vector<cocos2d::SpriteFrame *> array;
+	array.pushBack(hero_down);
+	array.pushBack(hero_pushdown);
+
+	Animation* animation = Animation::createWithSpriteFrames(array, 0.2f);
+	m_PlayAnimate = RepeatForever::create(Animate::create(animation));
     runAction(m_PlayAnimate);
 }
 
@@ -176,18 +176,18 @@ void Chero::turnRight()
 {
     stopAction(m_PlayAnimate);
     
-    Animation* standby = Animation::create();
     initParam param = CGameApp::GetInstance()->ParseFileParam("hero_pushright.png");
     SpriteFrame* hero_pushdown = SpriteFrame::create(param.file, param.rect);
-    standby->addSpriteFrame(hero_pushdown);
-    
+
     param =CGameApp::GetInstance()->ParseFileParam("hero_standbyright.png");
     SpriteFrame* hero_down = SpriteFrame::create(param.file, param.rect);
-    standby->addSpriteFrame(hero_down);
-    standby->setDelayPerUnit(0.1f);
-    standby->setRestoreOriginalFrame(true);
-    Animate* LeftAnimate = Animate::create(standby);
-    m_PlayAnimate = RepeatForever::create(Sequence::create(LeftAnimate, LeftAnimate->reverse(), NULL));
+
+	Vector<cocos2d::SpriteFrame *> array;
+	array.pushBack(hero_down);
+	array.pushBack(hero_pushdown);
+
+	Animation* animation = Animation::createWithSpriteFrames(array, 0.2f);
+	m_PlayAnimate = RepeatForever::create(Animate::create(animation));
     runAction(m_PlayAnimate);
 }
 
@@ -195,20 +195,18 @@ void Chero::turnUp()
 {
     stopAction(m_PlayAnimate);
     
-    Animation* standby = Animation::create();
     initParam param =CGameApp::GetInstance()->ParseFileParam("hero_pushup.png");
     SpriteFrame* hero_pushdown = SpriteFrame::create(param.file, param.rect);
-    standby->addSpriteFrame(hero_pushdown);
-    
+
     param =CGameApp::GetInstance()->ParseFileParam("hero_up.png");
     SpriteFrame* hero_down = SpriteFrame::create(param.file, param.rect);
-    standby->addSpriteFrame(hero_down);
     
-    standby->setDelayPerUnit(0.1f);
-    standby->setRestoreOriginalFrame(true);
-    
-    Animate* StandByAnimate = Animate::create(standby);
-    m_PlayAnimate = RepeatForever::create(Sequence::create(StandByAnimate, StandByAnimate->reverse(), NULL));
+	Vector<cocos2d::SpriteFrame *> array;
+	array.pushBack(hero_down);
+	array.pushBack(hero_pushdown);
+
+	Animation* animation = Animation::createWithSpriteFrames(array, 0.2f);
+	m_PlayAnimate = RepeatForever::create(Animate::create(animation));
     
     runAction(m_PlayAnimate);
 }
@@ -216,21 +214,19 @@ void Chero::turnUp()
 void Chero::turnDown()
 {
     stopAction(m_PlayAnimate);
-    
-    Animation* standby = Animation::create();
-    initParam param =CGameApp::GetInstance()->ParseFileParam("hero_pushdown.png");
+   
+	initParam param = CGameApp::GetInstance()->ParseFileParam("hero_down.png");
+	SpriteFrame* hero_down = SpriteFrame::create(param.file, param.rect);
+
+    param =CGameApp::GetInstance()->ParseFileParam("hero_pushdown.png");
     SpriteFrame* hero_pushdown = SpriteFrame::create(param.file, param.rect);
-    standby->addSpriteFrame(hero_pushdown);
-    
-    param =CGameApp::GetInstance()->ParseFileParam("hero_down.png");
-    SpriteFrame* hero_down = SpriteFrame::create(param.file, param.rect);
-    standby->addSpriteFrame(hero_down);
-    
-    standby->setDelayPerUnit(0.1f);
-    standby->setRestoreOriginalFrame(true);
-    
-    Animate* StandByAnimate = Animate::create(standby);
-    m_PlayAnimate = RepeatForever::create(Sequence::create(StandByAnimate, StandByAnimate->reverse(), NULL));
+
+	Vector<cocos2d::SpriteFrame *> array;
+	array.pushBack(hero_down);
+	array.pushBack(hero_pushdown);
+
+	Animation* animation = Animation::createWithSpriteFrames(array, 0.2f);
+    m_PlayAnimate = RepeatForever::create(Animate::create(animation));
     
     runAction(m_PlayAnimate);
 }
