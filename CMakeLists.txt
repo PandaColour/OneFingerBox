@@ -48,6 +48,7 @@ endif()
 
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
+     Classes/AdmobHelper.cpp
      Classes/AddBoxProp.cpp
      Classes/AppDelegate.cpp
      Classes/AStar.cpp
@@ -90,6 +91,7 @@ list(APPEND GAME_SOURCE
      Classes/ZoneLayer.cpp
      )
 list(APPEND GAME_HEADER
+     Classes/AdmobHelper.h
      Classes/AddBoxProp.h
      Classes/AppDelegate.h
      Classes/AStar.h
