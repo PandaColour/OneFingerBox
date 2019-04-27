@@ -14,9 +14,6 @@
 #include "AddBoxProp.h"
 using namespace std;
 USING_NS_CC;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "AdmobHelper.h"
-#endif
 
 bool CResultLayer::init()
 {
@@ -214,9 +211,6 @@ void CResultLayer::OnRestart()
 
 void CResultLayer::ShowFullScreenAd()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        AdmobHelper::showAds();
-#endif
 }
 
 void CResultLayer::TurnGameScence()

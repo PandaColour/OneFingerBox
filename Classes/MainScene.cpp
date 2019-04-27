@@ -12,7 +12,9 @@
 #include "Audio.h"
 #include "GameApp.h"
 USING_NS_CC;
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "AdmobHelper.h"
+#endif
 
 Scene* CMainScene::createScene()
 {
@@ -77,6 +79,10 @@ bool CMainScene::init()
         
         CGameApp::GetInstance()->init();
         scheduleOnce(schedule_selector(CMainScene::initApp), 0.0);
+
+        #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+                AdmobHelper::showAds();
+        #endif
         
         result = true;
         

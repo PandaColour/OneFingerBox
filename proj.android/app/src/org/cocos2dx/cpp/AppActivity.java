@@ -25,14 +25,8 @@ THE SOFTWARE.
 package org.cocos2dx.cpp;
 
 import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.view.ViewGroup.LayoutParams;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -44,11 +38,6 @@ public class AppActivity extends Cocos2dxActivity {
 
     private static AppActivity _activity;
     private AdView adView;
-
-    private PopupWindow popUp;
-    private LinearLayout layout;
-    private LinearLayout mainLayout;
-    boolean adsinited = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,24 +54,11 @@ public class AppActivity extends Cocos2dxActivity {
 
         _activity = this;
 
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         MobileAds.initialize(this, "ca-app-pub-7614285848136573~2492609446");
 
         adView = new AdView(this);
         adView.setAdUnitId("ca-app-pub-7614285848136573/3969342649");
         adView.setAdSize(AdSize.SMART_BANNER);
-
-//        RelativeLayout relativeLayout = new RelativeLayout(this);
-//        mFrameLayout.addView(relativeLayout);
-//
-//        RelativeLayout.LayoutParams adViewParams = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
-//        adViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//        adViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-//        relativeLayout.addView(adView, adViewParams);
-//
-//        AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-//        adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
-//        adView.loadAd(adRequestBuilder.build());
     }
 
     @Override
@@ -104,46 +80,20 @@ public class AppActivity extends Cocos2dxActivity {
     }
 
     public void _showAdPopup() {
-        if (adsinited) {
-            return;
-        }
         if (adView != null) {
             _activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    adsinited = true;
+                    RelativeLayout relativeLayout = new RelativeLayout(_activity);
+                    mFrameLayout.addView(relativeLayout);
 
-                    popUp = new PopupWindow(_activity);
+                    RelativeLayout.LayoutParams adViewParams = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
+                    adViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                    adViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    relativeLayout.addView(adView, adViewParams);
 
-                    int screenWidth = _activity.getWindowManager()
-                            .getDefaultDisplay().getHeight();
-                    popUp.setWidth(screenWidth);
-                    popUp.setHeight(50);
-
-                    popUp.setWindowLayoutMode(LayoutParams.WRAP_CONTENT,
-                            LayoutParams.WRAP_CONTENT);
-                    popUp.setClippingEnabled(false);
-                    LinearLayout layout = new LinearLayout(_activity);
-                    mainLayout = new LinearLayout(_activity);
-                    // The layout system for the PopupWindow will kill some
-                    // pixels due to margins/paddings etc… (No way to remove
-                    // it), so padd it to adjust
-                    layout.setPadding(0, 0, 0, 0);
-                    MarginLayoutParams params = new MarginLayoutParams(
-                            LayoutParams.FILL_PARENT,
-                            LayoutParams.FILL_PARENT);
-                    params.setMargins(0, 0, 0, 0);
-                    layout.setOrientation(LinearLayout.VERTICAL);
-                    popUp.setContentView(layout);
-//                    _activity.setContentView(mainLayout, params);
-
-                    mFrameLayout.addView(mainLayout);
-                    mainLayout.addView(adView);
                     AdRequest adRequest = new AdRequest.Builder().build();
                     _activity.adView.loadAd(adRequest);
-                    // Show our popup window
-                    popUp.showAtLocation(mainLayout, Gravity.BOTTOM, 0, 0);
-                    popUp.update();
                 }
             });
         }
