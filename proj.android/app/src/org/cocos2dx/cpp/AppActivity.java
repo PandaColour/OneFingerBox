@@ -66,23 +66,23 @@ public class AppActivity extends Cocos2dxActivity {
         _activity = this;
 
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        MobileAds.initialize(this, "ca-app-pub-7614285848136573/3969342649");
+        MobileAds.initialize(this, "ca-app-pub-7614285848136573~2492609446");
 
         adView = new AdView(this);
         adView.setAdUnitId("ca-app-pub-7614285848136573/3969342649");
         adView.setAdSize(AdSize.SMART_BANNER);
 
-        RelativeLayout relativeLayout = new RelativeLayout(this);
-        mFrameLayout.addView(relativeLayout);
-
-        RelativeLayout.LayoutParams adViewParams = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
-        adViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        adViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        relativeLayout.addView(adView, adViewParams);
-
-        AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
-        adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
-        adView.loadAd(adRequestBuilder.build());
+//        RelativeLayout relativeLayout = new RelativeLayout(this);
+//        mFrameLayout.addView(relativeLayout);
+//
+//        RelativeLayout.LayoutParams adViewParams = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
+//        adViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+//        adViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+//        relativeLayout.addView(adView, adViewParams);
+//
+//        AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+//        adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+//        adView.loadAd(adRequestBuilder.build());
     }
 
     @Override
@@ -104,9 +104,6 @@ public class AppActivity extends Cocos2dxActivity {
     }
 
     public void _showAdPopup() {
-        /*
-
-
         if (adsinited) {
             return;
         }
@@ -115,60 +112,41 @@ public class AppActivity extends Cocos2dxActivity {
                 @Override
                 public void run() {
                     adsinited = true;
-                    // Out popup window
+
                     popUp = new PopupWindow(_activity);
-                    // This is the minimum size for AdMob, we need to set this in case our target device run at 320x480 resolution(Otherwise no ad will be shown, see the padding kill below)
-                    popUp.setWidth(640);
-                    popUp.setHeight(960);
-                    popUp.setWindowLayoutMode(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                    popUp.setClippingEnabled(false);
-                    layout = new LinearLayout(_activity);
-                    mainLayout = new LinearLayout(_activity);
-                    // The layout system for the PopupWindow will kill some pixels due to margins/paddings etc… (No way to remove it), so padd it to adjust
-                    layout.setPadding(-5, -5, -5, -5);
-                    MarginLayoutParams params = new MarginLayoutParams(
-                            LayoutParams.WRAP_CONTENT,
+
+                    int screenWidth = _activity.getWindowManager()
+                            .getDefaultDisplay().getHeight();
+                    popUp.setWidth(screenWidth);
+                    popUp.setHeight(50);
+
+                    popUp.setWindowLayoutMode(LayoutParams.WRAP_CONTENT,
                             LayoutParams.WRAP_CONTENT);
+                    popUp.setClippingEnabled(false);
+                    LinearLayout layout = new LinearLayout(_activity);
+                    mainLayout = new LinearLayout(_activity);
+                    // The layout system for the PopupWindow will kill some
+                    // pixels due to margins/paddings etc… (No way to remove
+                    // it), so padd it to adjust
+                    layout.setPadding(0, 0, 0, 0);
+                    MarginLayoutParams params = new MarginLayoutParams(
+                            LayoutParams.FILL_PARENT,
+                            LayoutParams.FILL_PARENT);
                     params.setMargins(0, 0, 0, 0);
                     layout.setOrientation(LinearLayout.VERTICAL);
-                    layout.addView(fullView, params);
                     popUp.setContentView(layout);
-                    _activity.setContentView(mainLayout, params);// you can get the TestDevice ID from the output of logcat .
-                    AdRequest adRequest = new AdRequest.Builder()
-                            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                            .build();
-                    // Enable this if your are testing AdMob, otherwise you'll risk to be banned!
-                    _activity.fullView.loadAd(adRequest);
+//                    _activity.setContentView(mainLayout, params);
+
+                    mFrameLayout.addView(mainLayout);
+                    mainLayout.addView(adView);
+                    AdRequest adRequest = new AdRequest.Builder().build();
+                    _activity.adView.loadAd(adRequest);
                     // Show our popup window
                     popUp.showAtLocation(mainLayout, Gravity.BOTTOM, 0, 0);
                     popUp.update();
                 }
             });
         }
-
-        */
     }
 
-    private class AdmobListener extends AdListener {
-        @Override
-        public void onAdClosed() {
-            super.onAdClosed();
-        }
-        @Override
-        public void onAdFailedToLoad(int errorCode) {
-            super.onAdFailedToLoad(errorCode);
-        }
-        @Override
-        public void onAdLeftApplication() {
-            super.onAdLeftApplication();
-        }
-        @Override
-        public void onAdLoaded() {
-            super.onAdLoaded();
-        }
-        @Override
-        public void onAdOpened() {
-            super.onAdOpened();
-        }
-    }
 }
