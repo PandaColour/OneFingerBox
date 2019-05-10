@@ -8,7 +8,8 @@
 class AdmobHelper
 {
 public:
-    static void showAds();
+    static void showBanner();
+    static void showFullAd();
 };
 
 #endif //PROJ_ANDROID_ADMOBHELPER_H

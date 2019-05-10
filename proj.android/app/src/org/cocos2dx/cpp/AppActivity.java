@@ -24,12 +24,16 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.cpp;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
@@ -38,6 +42,7 @@ public class AppActivity extends Cocos2dxActivity {
 
     private static AppActivity _activity;
     private AdView adView;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +59,57 @@ public class AppActivity extends Cocos2dxActivity {
 
         _activity = this;
 
-        MobileAds.initialize(this, "ca-app-pub-7614285848136573~2492609446");
+        MobileAds.initialize(this, "ca-app-pub-7614285848136573~5029266254");
 
         adView = new AdView(this);
-        adView.setAdUnitId("ca-app-pub-7614285848136573/3969342649");
+        adView.setAdUnitId("ca-app-pub-7614285848136573/8202224505");
         adView.setAdSize(AdSize.SMART_BANNER);
+
+        RelativeLayout relativeLayout = new RelativeLayout(_activity);
+        mFrameLayout.addView(relativeLayout);
+
+        RelativeLayout.LayoutParams adViewParams = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
+        adViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        adViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        relativeLayout.addView(adView, adViewParams);
+
+        adView.setAdListener(new AdListener(){
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                Log.d("AdView", "AdView onAdFailedToLoad: " + i );
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                adView.setBackgroundColor(Color.BLACK);
+            }
+        });
+
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId("ca-app-pub-7614285848136573/5881869843");
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                Log.d("InterstitialAd", "InterstitialAd onAdFailedToLoad: " + i );
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+            }
+        });
+
+
+
     }
 
     @Override
@@ -75,28 +126,43 @@ public class AppActivity extends Cocos2dxActivity {
         adView.destroy();
     }
 
-    public static void showAdPopup(){
-        _activity._showAdPopup();
+    public static void showBanner(){
+        _activity._showBanner();
     }
 
-    public void _showAdPopup() {
+    public void _showBanner() {
         if (adView != null) {
             _activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    RelativeLayout relativeLayout = new RelativeLayout(_activity);
-                    mFrameLayout.addView(relativeLayout);
-
-                    RelativeLayout.LayoutParams adViewParams = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
-                    adViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                    adViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                    relativeLayout.addView(adView, adViewParams);
-
-                    AdRequest adRequest = new AdRequest.Builder().build();
+                    AdRequest adRequest = new AdRequest.Builder().addTestDevice("00721F2E4EF2EE0AC844D815C3A035A3").build();
                     _activity.adView.loadAd(adRequest);
                 }
             });
         }
     }
+
+    public static void showFullAd(){
+        _activity._showFullAd();
+    }
+
+    public void _showFullAd() {
+        if (adView != null) {
+            _activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (_activity.interstitialAd != null && _activity.interstitialAd.isLoaded()) {
+                        _activity.interstitialAd.show();
+                    }
+
+                    if (!interstitialAd.isLoading() && !interstitialAd.isLoaded()) {
+                        AdRequest adRequest = new AdRequest.Builder().addTestDevice("00721F2E4EF2EE0AC844D815C3A035A3").build();
+                        _activity.interstitialAd.loadAd(adRequest);
+                    }
+                }
+            });
+        }
+    }
+
 
 }

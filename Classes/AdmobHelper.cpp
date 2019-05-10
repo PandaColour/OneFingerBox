@@ -7,10 +7,20 @@
 #include <jni.h>
 #include <android/log.h>
 const char* NativeActivityClassName = "org/cocos2dx/cpp/AppActivity";
-void AdmobHelper::showAds()
+void AdmobHelper::showBanner()
 {
     cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, NativeActivityClassName, "showAdPopup", "()V"))
+    if (cocos2d::JniHelper::getStaticMethodInfo(t, NativeActivityClassName, "showBanner", "()V"))
+    {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void AdmobHelper::showFullAd()
+{
+    cocos2d::JniMethodInfo t;
+    if (cocos2d::JniHelper::getStaticMethodInfo(t, NativeActivityClassName, "showFullAd", "()V"))
     {
         t.env->CallStaticVoidMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);

@@ -81,7 +81,7 @@ bool CMainScene::init()
         scheduleOnce(schedule_selector(CMainScene::initApp), 0.0);
 
         #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-                AdmobHelper::showAds();
+                AdmobHelper::showBanner();
         #endif
         
         result = true;
