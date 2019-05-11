@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0'">
+    <VisualStudioVersion>15.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x86">
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x86">
+      <Configuration>Release</Configuration>
+      <Platform>x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup>
+    <WapProjPath Condition="'$(WapProjPath)'==''">$(MSBuildExtensionsPath)\Microsoft\DesktopBridge\</WapProjPath>
+  </PropertyGroup>
+  <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
+  <PropertyGroup>
+    <ProjectGuid>55edf64b-8f75-4f92-82c7-b3698fb3f456</ProjectGuid>
+    <TargetPlatformVersion>10.0.17134.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <DefaultLanguage>zh-CN</DefaultLanguage>
+    <PackageCertificateKeyFile>WapProj_StoreKey.pfx</PackageCertificateKeyFile>
+    <EntryPointProjectUniqueName>..\proj.win32\OneFingerBox.vcxproj</EntryPointProjectUniqueName>
+    <PackageCertificateThumbprint>42721E6EFF3489E643D952AAC94AC3D1DD7A9E87</PackageCertificateThumbprint>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppInstallerUpdateFrequency>1</AppInstallerUpdateFrequency>
+    <AppInstallerCheckForUpdateFrequency>OnApplicationRun</AppInstallerCheckForUpdateFrequency>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="WapProj_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OneFingerBox\glew32.dll" />
+    <Content Include="OneFingerBox\iconv.dll" />
+    <Content Include="Images\LockScreenLogo.scale-200.png" />
+    <Content Include="Images\Square150x150Logo.scale-200.png" />
+    <Content Include="Images\Square44x44Logo.scale-200.png" />
+    <Content Include="Images\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Images\StoreLogo.png" />
+    <Content Include="Images\Wide310x150Logo.scale-200.png" />
+    <Content Include="OneFingerBox\libcocos2d.dll" />
+    <Content Include="OneFingerBox\libcrypto-1_1.dll" />
+    <Content Include="OneFingerBox\libcurl.dll" />
+    <Content Include="OneFingerBox\libmpg123.dll" />
+    <Content Include="OneFingerBox\libogg.dll" />
+    <Content Include="OneFingerBox\libssl-1_1.dll" />
+    <Content Include="OneFingerBox\libvorbis.dll" />
+    <Content Include="OneFingerBox\libvorbisfile.dll" />
+    <Content Include="OneFingerBox\OpenAL32.dll" />
+    <Content Include="OneFingerBox\Resources\backmusic.mp3" />
+    <Content Include="OneFingerBox\Resources\blood.mp3" />
+    <Content Include="OneFingerBox\Resources\boom.wav" />
+    <Content Include="OneFingerBox\Resources\box.wav" />
+    <Content Include="OneFingerBox\Resources\game_background.png" />
+    <Content Include="OneFingerBox\Resources\hit.mp3" />
+    <Content Include="OneFingerBox\Resources\hurt.wav" />
+    <Content Include="OneFingerBox\Resources\kill.wav" />
+    <Content Include="OneFingerBox\Resources\lose.mp3" />
+    <Content Include="OneFingerBox\Resources\main_background.png" />
+    <Content Include="OneFingerBox\Resources\Marker Felt.ttf" />
+    <Content Include="OneFingerBox\Resources\ofboxxml.xml" />
+    <Content Include="OneFingerBox\Resources\OneFingerBox0.png" />
+    <Content Include="OneFingerBox\Resources\OneFingerBox0.xml" />
+    <Content Include="OneFingerBox\Resources\OneFingerBox1.png" />
+    <Content Include="OneFingerBox\Resources\OneFingerBox1.xml" />
+    <Content Include="OneFingerBox\Resources\push.mp3" />
+    <Content Include="OneFingerBox\Resources\readygo.mp3" />
+    <Content Include="OneFingerBox\Resources\win.mp3" />
+    <Content Include="OneFingerBox\Resources\yahoo.wav" />
+    <Content Include="OneFingerBox\sqlite3.dll" />
+    <Content Include="OneFingerBox\uv.dll" />
+    <Content Include="OneFingerBox\websockets.dll" />
+    <Content Include="OneFingerBox\zlib1.dll" />
+    <None Include="WapProj_StoreKey.pfx" />
+    <None Include="Package.StoreAssociation.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\proj.win32\OneFingerBox.vcxproj" />
+  </ItemGroup>
+  <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
+</Project>
