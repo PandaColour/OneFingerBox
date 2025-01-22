@@ -1,7 +1,7 @@
 //
 // Created by Sirius on 2019/4/26.
 //
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 #include "AdmobHelper.h"
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>

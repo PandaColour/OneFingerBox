@@ -24,25 +24,13 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.cpp;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.RelativeLayout;
-
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-
 import org.cocos2dx.lib.Cocos2dxActivity;
+import android.os.Build;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 
 public class AppActivity extends Cocos2dxActivity {
-
-    private static AppActivity _activity;
-    private AdView adView;
-    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,113 +44,15 @@ public class AppActivity extends Cocos2dxActivity {
             // Don't need to finish it again since it's finished in super.onCreate .
             return;
         }
-
-        _activity = this;
-
-        MobileAds.initialize(this, "ca-app-pub-7614285848136573~5029266254");
-
-        adView = new AdView(this);
-        adView.setAdUnitId("ca-app-pub-7614285848136573/8202224505");
-        adView.setAdSize(AdSize.SMART_BANNER);
-
-        RelativeLayout relativeLayout = new RelativeLayout(_activity);
-        mFrameLayout.addView(relativeLayout);
-
-        RelativeLayout.LayoutParams adViewParams = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
-        adViewParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        adViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        relativeLayout.addView(adView, adViewParams);
-
-        adView.setAdListener(new AdListener(){
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.d("AdView", "AdView onAdFailedToLoad: " + i );
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                adView.setBackgroundColor(Color.BLACK);
-            }
-        });
-
-
-        interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-7614285848136573/5881869843");
-        interstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Log.d("InterstitialAd", "InterstitialAd onAdFailedToLoad: " + i );
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-        });
-
-
-
-    }
-
-    @Override
-    protected void onResume() {
-        // TODO Auto-generated method stub
-        super.onResume();
-        adView.resume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        // TODO Auto-generated method stub
-        super.onDestroy();
-        adView.destroy();
-    }
-
-    public static void showBanner(){
-        _activity._showBanner();
-    }
-
-    public void _showBanner() {
-        if (adView != null) {
-            _activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    AdRequest adRequest = new AdRequest.Builder().addTestDevice("00721F2E4EF2EE0AC844D815C3A035A3").build();
-                    _activity.adView.loadAd(adRequest);
-                }
-            });
+        // Make sure we're running on Pie or higher to change cutout mode
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            // Enable rendering into the cutout area
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            getWindow().setAttributes(lp);
         }
+        // DO OTHER INITIALIZATION BELOW
+        
     }
-
-    public static void showFullAd(){
-        _activity._showFullAd();
-    }
-
-    public void _showFullAd() {
-        if (adView != null) {
-            _activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (_activity.interstitialAd != null && _activity.interstitialAd.isLoaded()) {
-                        _activity.interstitialAd.show();
-                    }
-
-                    if (!interstitialAd.isLoading() && !interstitialAd.isLoaded()) {
-                        AdRequest adRequest = new AdRequest.Builder().addTestDevice("00721F2E4EF2EE0AC844D815C3A035A3").build();
-                        _activity.interstitialAd.loadAd(adRequest);
-                    }
-                }
-            });
-        }
-    }
-
 
 }
