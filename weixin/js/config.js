@@ -57,6 +57,12 @@ const MONSTER_SCORE = {
   8: 150, // purple
 }
 
+// Game mode enum
+const GAME_MODE = {
+  TUTORIAL: 'tutorial',
+  NORMAL:   'normal',
+}
+
 // Sprite frame definitions from OneFingerBox0.png
 const FRAMES_0 = {
   'LV':                   { x: 0,   y: 0,   w: 35,  h: 32 },
@@ -609,7 +615,7 @@ module.exports = {
   DESIGN_W, DESIGN_H,
   GRID_COLS, GRID_ROWS, TILE_W, TILE_H,
   HERO_START, HERO_INIT_BLOOD, MAX_MONSTERS, MONSTER_CHASE_DIST,
-  BARRIER, PROP, MONSTER,
+  BARRIER, PROP, MONSTER, GAME_MODE,
   PROP_SCORE, MONSTER_SCORE,
   FRAMES_0, FRAMES_1,
   AUDIO_FILES, IMAGE_FILES,

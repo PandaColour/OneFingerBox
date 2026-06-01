@@ -70,25 +70,14 @@ class SettingScene {
     } else {
       this.rm.drawFrame0(ctx, 'music_close', centerX - 85, 300, 170, 80)
     }
-    ctx.fillStyle = '#333333'
-    ctx.font = '20px Arial'
-    ctx.textAlign = 'center'
-    ctx.fillText('Music: ' + (this.audio.musicEnabled ? 'ON' : 'OFF'), centerX, 340)
-
     // Sound toggle
     if (this.audio.soundEnabled) {
       this.rm.drawFrame1(ctx, 'sound_open', centerX - 85, 430, 170, 80)
     } else {
       this.rm.drawFrame1(ctx, 'sound_close', centerX - 85, 430, 170, 80)
     }
-    ctx.fillStyle = '#333333'
-    ctx.fillText('Sound: ' + (this.audio.soundEnabled ? 'ON' : 'OFF'), centerX, 470)
-
     // Back button
     this.rm.drawFrame1(ctx, 'restart_normal', centerX - 77, 600, 154, 66)
-    ctx.fillStyle = '#ffffff'
-    ctx.font = '24px Arial'
-    ctx.fillText('Back', centerX, 633)
   }
 }
 

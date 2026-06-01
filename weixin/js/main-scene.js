@@ -20,8 +20,7 @@ class MainScene {
   }
 
   onTouchEnd(x, y) {
-    // Start button area (design coords: centered, y ~550-680)
-    const scaleX = DESIGN_W
+    // Start button area
     const btnX = DESIGN_W / 2 - 121
     const btnY = 550
     const btnW = 243

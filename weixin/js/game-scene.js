@@ -4,7 +4,7 @@ const {
   GRID_COLS, GRID_ROWS, TILE_W, TILE_H,
   HERO_START, HERO_INIT_BLOOD, MAX_MONSTERS, MONSTER_CHASE_DIST,
   BARRIER, PROP, MONSTER, PROP_SCORE, MONSTER_SCORE,
-  LEVELS,
+  LEVELS, GAME_MODE,
 } = require('./config')
 const { AStar } = require('./astar')
 
@@ -92,7 +92,7 @@ class GameScene {
     this.monsterSpawnTimer = 0
 
     // Tutorial
-    this.isTutorial = (this.levelNum === 1)
+    this.gameMode = (this.levelNum === 1) ? GAME_MODE.TUTORIAL : GAME_MODE.NORMAL
     this.tutorialState = -1
     this.handVisible = false
     this.handCol = 0
@@ -109,7 +109,7 @@ class GameScene {
 
     this.monsterSpawnInterval = 1000
 
-    if (this.isTutorial) {
+    if (this.gameMode === GAME_MODE.TUTORIAL) {
       this.initTutorial()
     } else {
       this.initPropIndexes()
@@ -118,6 +118,7 @@ class GameScene {
 
   // ---- Tutorial ----
   initTutorial() {
+    this.gameMode = GAME_MODE.TUTORIAL
     this.tutorialState = TUT.START
     this.monsterQueue = [] // tutorial controls its own monsters
 
@@ -144,6 +145,7 @@ class GameScene {
   }
 
   advanceTutorial() {
+    if (this.gameMode !== GAME_MODE.TUTORIAL) return
     const prev = this.tutorialState
     this.tutorialState++
 
@@ -187,14 +189,12 @@ class GameScene {
         break
 
       case TUT.MOVETOBOX2: // After CLICKPROP: show hand at (4,3)
-        this.scheduleOnce(() => {
-          this.onTutorialWin()
-        }, 2000)
         this.showHand(4, 3)
         break
 
       case TUT.WINGAME:
-        this.onTutorialWin()
+        this.hideHand()
+        this._waitingForTutorialEnd = true
         break
     }
   }
@@ -221,6 +221,7 @@ class GameScene {
   }
 
   onTutorialWin() {
+    if (this.state !== 'playing') return
     this.state = 'win'
     this.audio.playSound('win')
     const stars = 3
@@ -311,7 +312,7 @@ class GameScene {
   }
 
   onPropTrigger() {
-    if (this.isTutorial) return
+    if (this.gameMode !== GAME_MODE.NORMAL) return
     for (let i = 0; i < 2; i++) {
       if (this.propIndexes[i] === this.barriers.length) {
         this.propIndexes[i] = -1 // mark as used
@@ -352,15 +353,19 @@ class GameScene {
 
   isValidGrid(col, row) { return col >= 0 && col < GRID_COLS && row >= 0 && row < GRID_ROWS }
   isBlocked(col, row) { return !this.isValidGrid(col, row) || this.grid[row][col] !== 0 }
+  setFacing(dx, dy) {
+    if (dx < 0) this.heroFacing = 'left'
+    else if (dx > 0) this.heroFacing = 'right'
+    else if (dy > 0) this.heroFacing = 'up'
+    else if (dy < 0) this.heroFacing = 'down'
+  }
 
   getBarrierAt(col, row) { return this.barriers.find(b => b.col === col && b.row === row) }
   getMonsterAt(col, row) { return this.monsters.find(m => m.col === col && m.row === row) }
 
   getObstacles() {
     const obs = new Set()
-    for (let r = 0; r < GRID_ROWS; r++)
-      for (let c = 0; c < GRID_COLS; c++)
-        if (this.grid[r][c] !== 0) obs.add(c + ',' + r)
+    for (const b of this.barriers) obs.add(b.col + ',' + b.row)
     for (const m of this.monsters) obs.add(m.col + ',' + m.row)
     return obs
   }
@@ -396,7 +401,7 @@ class GameScene {
     if (this.heroMoving) return
 
     // Tutorial: restrict taps to target cell only
-    if (this.isTutorial && this.tutorialState >= 0) {
+    if (this.gameMode === GAME_MODE.TUTORIAL && this.tutorialState >= 0) {
       const target = TUT_TARGETS[this.tutorialState]
       if (!target) return
       if (col !== target.col || row !== target.row) return
@@ -439,10 +444,7 @@ class GameScene {
     const dx = next.col - this.hero.col
     const dy = next.row - this.hero.row
 
-    if (dx < 0) this.heroFacing = 'left'
-    else if (dx > 0) this.heroFacing = 'right'
-    else if (dy > 0) this.heroFacing = 'up'
-    else if (dy < 0) this.heroFacing = 'down'
+    this.setFacing(dx, dy)
 
     const fromPos = this.gridToScreen(this.hero.col, this.hero.row)
     const toPos = this.gridToScreen(next.col, next.row)
@@ -488,14 +490,15 @@ class GameScene {
       this.hero.col += dirCol
       this.hero.row += dirRow
       this.updateHeroAnim()
+      this.setFacing(dirCol, dirRow)
       return
     }
 
-    // Kill monsters along path (box slides through them)
-    for (const cell of pushPath) {
-      const monster = this.getMonsterAt(cell.col, cell.row)
-      if (monster) this.killMonster(monster)
-    }
+    // Record monsters per cell — killed when box reaches each cell during animation
+    const cellKills = pushPath.map(cell => ({
+      col: cell.col, row: cell.row,
+      monster: this.getMonsterAt(cell.col, cell.row) || null,
+    }))
 
     // Move hero to box's old position
     this.hero.col += dirCol
@@ -516,14 +519,12 @@ class GameScene {
     this.anims.push({
       type: 'box', fromX: fromPos.x, fromY: fromPos.y,
       toX: toPos.x, toY: toPos.y,
-      duration: pushPath.length * 80, elapsed: 0, barrier: box, destroy: false,
+      duration: pushPath.length * 160, elapsed: 0, barrier: box, destroy: false,
+      _cellKills: cellKills, _killedUpTo: -1,
     })
 
     this.updateHeroAnim()
-    if (dirCol > 0) this.heroFacing = 'right'
-    else if (dirCol < 0) this.heroFacing = 'left'
-    else if (dirRow > 0) this.heroFacing = 'up'
-    else this.heroFacing = 'down'
+    this.setFacing(dirCol, dirRow)
   }
 
   updateHeroAnim() {
@@ -624,7 +625,7 @@ class GameScene {
 
   // ---- Monster AI ----
   spawnMonsters(dt) {
-    if (this.isTutorial) return // tutorial controls its own monsters
+    if (this.gameMode !== GAME_MODE.NORMAL) return
     if (this.monsterQueue.length === 0 || this.monsterSpawnIndex >= this.monsterQueue.length) return
     if (this.monsters.length >= MAX_MONSTERS) return
     this.monsterSpawnTimer += dt
@@ -656,9 +657,9 @@ class GameScene {
       const obstacles = this.getObstacles()
       obstacles.delete(monster.col + ',' + monster.row) // exclude self from obstacles
       const path = AStar.findPath(monster.col, monster.row, this.hero.col, this.hero.row, obstacles)
-      if (path && path.length > 1) {
-        newCol = path[1].col
-        newRow = path[1].row
+      if (path && path.length > 0) {
+        newCol = path[0].col
+        newRow = path[0].row
       }
     }
 
@@ -692,7 +693,7 @@ class GameScene {
   }
 
   checkWinCondition() {
-    if (this.state !== 'playing' || this.isTutorial) return
+    if (this.state !== 'playing' || this.gameMode !== GAME_MODE.NORMAL) return
     const hasMonsters = this.monsters.length > 0
     const hasMoreMonsters = this.monsterSpawnIndex < this.monsterQueue.length
     if (!hasMonsters && !hasMoreMonsters && this.monsterQueue.length > 0) {
@@ -708,7 +709,7 @@ class GameScene {
   }
 
   calculateStars() {
-    if (this.isTutorial) return 3
+    if (this.levelNum === 1) return 3
     return Math.min(this.propGetCount, 3)
   }
 
@@ -764,7 +765,28 @@ class GameScene {
         anim.barrier.animX = anim.fromX + (anim.toX - anim.fromX) * t
         anim.barrier.animY = anim.fromY + (anim.toY - anim.fromY) * t
       }
-      if (t >= 1) this.anims.splice(i, 1)
+      if (anim._cellKills) {
+        const cellCount = anim._cellKills.length
+        const currentCell = Math.min(Math.floor(t * cellCount), cellCount - 1)
+        if (currentCell > anim._killedUpTo) {
+          for (let j = anim._killedUpTo + 1; j <= currentCell; j++) {
+            if (anim._cellKills[j].monster) {
+              this.killMonster(anim._cellKills[j].monster)
+              anim._cellKills[j].monster = null
+            }
+          }
+          anim._killedUpTo = currentCell
+        }
+      }
+      if (t >= 1) {
+        this.anims.splice(i, 1)
+      }
+    }
+
+    // Tutorial final push animation completed → trigger win
+    if (this._waitingForTutorialEnd && this.anims.length === 0) {
+      this._waitingForTutorialEnd = false
+      this.onTutorialWin()
     }
 
     // Monster movement (per-monster action-chaining, matching C++ MoveTo→CallFunc→MonsterMove)
@@ -808,6 +830,12 @@ class GameScene {
     this.checkWinCondition()
   }
 
+  blinkAlpha(obj) {
+    if (!obj.blink) return 1
+    obj.blinkTimer = (obj.blinkTimer || 0) + 16
+    return Math.sin(obj.blinkTimer * 0.008) * 0.4 + 0.6
+  }
+
   // ---- Render ----
   render(ctx) {
     // Background
@@ -846,25 +874,17 @@ class GameScene {
       if (b.animX !== 0 || b.animY !== 0) pos = { x: b.animX, y: b.animY }
       else { pos = this.gridToScreen(b.col, b.row); b.animX = pos.x; b.animY = pos.y }
       drawList.push({ row: b.row, order: 0, draw: () => {
-        if (b.blink) {
-          b.blinkTimer = (b.blinkTimer || 0) + 16
-          const alpha = Math.sin(b.blinkTimer * 0.008) * 0.4 + 0.6
-          ctx.globalAlpha = alpha
-        }
+        ctx.globalAlpha = this.blinkAlpha(b)
         this.drawBarrier(ctx, b.type, pos.x, pos.y)
-        if (b.blink) ctx.globalAlpha = 1
+        ctx.globalAlpha = 1
       }})
     }
 
     for (const prop of this.props) {
       drawList.push({ row: prop.row, order: 1, draw: () => {
-        if (prop.blink) {
-          prop.blinkTimer = (prop.blinkTimer || 0) + 16
-          const alpha = Math.sin(prop.blinkTimer * 0.008) * 0.4 + 0.6
-          ctx.globalAlpha = alpha
-        }
+        ctx.globalAlpha = this.blinkAlpha(prop)
         this.drawProp(ctx, prop.type, prop.animX, prop.animY)
-        if (prop.blink) ctx.globalAlpha = 1
+        ctx.globalAlpha = 1
       }})
     }
 
@@ -938,7 +958,7 @@ class GameScene {
 
     const hx = this.hero.animX || this.gridToScreen(this.hero.col, this.hero.row).x
     const hy = this.hero.animY || this.gridToScreen(this.hero.col, this.hero.row).y
-    this.rm.drawFrame0(ctx, frame, hx - 10, hy - 25, TILE_W + 20, TILE_H + 30)
+    this.rm.drawFrame0(ctx, frame, hx - 10, hy - 35, TILE_W + 20, TILE_H + 30)
   }
 
   drawHand(ctx) {

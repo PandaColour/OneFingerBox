@@ -10,6 +10,7 @@ class LevelScene {
     this.page = 1
     this.perPage = 20
     this.totalPages = 2
+    this.swipeThreshold = 50
   }
 
   show() {
@@ -18,25 +19,24 @@ class LevelScene {
 
   hide() {}
 
-  onTouchStart(x, y) {}
+  onTouchStart(x, y) {
+    this._touchStartX = x
+    this._touchStartY = y
+  }
 
   onTouchEnd(x, y) {
-    // Back button (top-left)
-    if (x >= 20 && x <= 176 && y >= 20 && y <= 105) {
-      this.audio.playSound('hit')
-      this.onNavigate('main')
-      return
-    }
+    const dx = x - this._touchStartX
+    const dy = y - this._touchStartY
 
-    // Page arrows
-    if (this.page > 1 && x >= 20 && x <= 78 && y >= DESIGN_H / 2 - 51 && y <= DESIGN_H / 2 + 51) {
-      this.page--
-      this.audio.playSound('box')
-      return
-    }
-    if (this.page < this.totalPages && x >= DESIGN_W - 78 && x <= DESIGN_W - 20 && y >= DESIGN_H / 2 - 51 && y <= DESIGN_H / 2 + 51) {
-      this.page++
-      this.audio.playSound('box')
+    // Swipe detection: horizontal swipe to change pages
+    if (Math.abs(dx) > this.swipeThreshold && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0 && this.page < this.totalPages) {
+        this.page++
+        this.audio.playSound('box')
+      } else if (dx > 0 && this.page > 1) {
+        this.page--
+        this.audio.playSound('box')
+      }
       return
     }
 
@@ -84,9 +84,6 @@ class LevelScene {
     ctx.textBaseline = 'middle'
     ctx.fillText('选择关卡', DESIGN_W / 2, 50)
 
-    // Back button
-    this.rm.drawFrame0(ctx, 'exit_normal', 20, 20, 120, 66)
-
     // Level buttons
     const startX = 60
     const startY = 150
@@ -122,14 +119,6 @@ class LevelScene {
         // Locked level
         this.rm.drawFrame0(ctx, 'level_lock', bx, by, btnSize, btnSize)
       }
-    }
-
-    // Page arrows
-    if (this.page > 1) {
-      this.rm.drawFrame0(ctx, 'level_arrow_normal', 20, DESIGN_H / 2 - 51, 46, 81)
-    }
-    if (this.page < this.totalPages) {
-      this.rm.drawFrame0(ctx, 'level_arrow_normal', DESIGN_W - 66, DESIGN_H / 2 - 51, 46, 81)
     }
 
     // Page indicator
